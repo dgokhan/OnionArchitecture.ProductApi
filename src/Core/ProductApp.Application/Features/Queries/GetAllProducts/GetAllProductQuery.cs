@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace ProductApp.Application.Features.Queries.GetAllProducts
 {
-    public class GetAllProductQuery : IRequest<ServiceResponse<List<ProductViewDto>>>
+    public class GetAllProductQuery : IRequest<IResult<List<ProductViewDto>>>
     {
-        public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, ServiceResponse<List<ProductViewDto>>>
+        public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, IResult<List<ProductViewDto>>>
         {
             private readonly IProductRepository productRepository;
             private readonly IMapper mapper;
@@ -25,12 +25,12 @@ namespace ProductApp.Application.Features.Queries.GetAllProducts
                 this.mapper = mapper;
             }
 
-            public async Task<ServiceResponse<List<ProductViewDto>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
+            public async Task<IResult<List<ProductViewDto>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
             {
                 var product = await productRepository.GetAllAsync();
                 var viewModel = mapper.Map<List<ProductViewDto>>(product);
 
-                return new ServiceResponse<List<ProductViewDto>>(viewModel);
+                return Result.Func(viewModel);
             }
         }
     }

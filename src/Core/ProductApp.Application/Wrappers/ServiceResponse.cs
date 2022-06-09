@@ -2,7 +2,7 @@
 
 namespace ProductApp.Application.Wrappers
 {
-    public class ServiceResponse<T> : BaseResponse
+    public class ServiceResponse<T> 
     {
         public T Value { get; set; }
 
